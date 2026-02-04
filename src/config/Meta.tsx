@@ -77,22 +77,6 @@ export const pageMetadata: Record<string, PageMeta> = {
     twitterCard: 'summary_large_image',
   },
 
-  // Projects page
-  '/projects': {
-    title: 'Projects - My Work & Projects Portfolio',
-    description:
-      'Discover my projects and work across different technologies and domains. From web apps to mobile solutions.',
-    keywords: [
-      'projects',
-      'portfolio',
-      'web development',
-      'applications',
-      'software',
-    ],
-    ogImage: '/meta/projects.png',
-    twitterCard: 'summary_large_image',
-  },
-
   // Blog page
   '/blog': {
     title: 'Blog - Thoughts & Tutorials',

@@ -37,8 +37,7 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
             <div className="flex items-center gap-2">
               <h3
                 className={cn(
-                  'text-lg font-bold',
-                  experience.isBlur ? 'blur-[5px]' : 'blur-none',
+                  'text-lg font-bold'
                 )}
               >
                 {experience.company}
@@ -83,20 +82,6 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>Connect on LinkedIn</TooltipContent>
-                </Tooltip>
-              )}
-              {experience.github && (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Link
-                      href={experience.github}
-                      target="_blank"
-                      className="size-4 text-neutral-500"
-                    >
-                      <Github />
-                    </Link>
-                  </TooltipTrigger>
-                  <TooltipContent>View GitHub</TooltipContent>
                 </Tooltip>
               )}
               {experience.isCurrent && (

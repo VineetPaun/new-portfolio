@@ -9,6 +9,7 @@ import CV from '../svgs/CV';
 import Chat from '../svgs/Chat';
 import { Button } from '../ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+import SpotifyCard from './SpotifyCard';
 
 const buttonIcons = {
   CV: CV,
@@ -109,6 +110,8 @@ export default function Hero() {
           </Tooltip>
         ))}
       </div>
+
+      <SpotifyCard />
     </Container>
   );
 }

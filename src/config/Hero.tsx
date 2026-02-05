@@ -29,7 +29,7 @@ export const skillComponents = {
 export const heroConfig = {
   // Personal Information
   name: 'Vineet',
-  title: 'A Full Stack AI developer.',
+  title: 'A Full Stack AI-ready developer.',
   avatar: '/assets/logo.png',
 
   // Skills Configuration
@@ -64,7 +64,7 @@ export const heroConfig = {
   // Description Configuration
   description: {
     template:
-      'I build backend-driven web applications using {skills:0}, {skills:1}, {skills:2}, {skills:3} and {skills:4}. With a strong focus on <b>AI-powered features.</b> Enthusiastic about <b>AI and LLMs</b>, driven by a keen eye for scalable systems.',
+      'I build backend-driven web applications using {skills:0}, {skills:1}, {skills:2}, {skills:3} and {skills:4} with a strong focus on <b>AI-powered features.</b> Enthusiastic about <b>AI and LLMs</b>, driven by a keen eye for scalable systems.',
   },
 
   // Buttons Configuration

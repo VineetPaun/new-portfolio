@@ -23,13 +23,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
     <Card className="group h-full w-full overflow-hidden border-gray-100 p-0 shadow-none transition-all dark:border-gray-800">
       <CardHeader className="p-0">
         <div className="group relative aspect-video overflow-hidden">
-          <Image
-            className="h-full w-full object-cover"
-            src={project.image}
-            alt={project.title}
-            width={1920}
-            height={1080}
-          />
+          <Link href={project.live} target="_blank" rel="noopener noreferrer">
+            <Image
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              src={project.image}
+              alt={project.title}
+              width={1920}
+              height={1080}
+            />
+          </Link>
         </div>
       </CardHeader>
 
@@ -37,15 +39,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="space-y-4">
           {/* Project Header - Title and Icons */}
           <div className="flex items-center justify-between gap-4">
-            <h3 className="group-hover:text-primary text-xl leading-tight font-semibold">
-              {project.title}
-            </h3>
+            <Link href={project.live} target="_blank" rel="noopener noreferrer">
+              <h3 className="group-hover:text-primary text-xl leading-tight font-semibold transition-colors hover:underline hover:underline-offset-4">
+                {project.title}
+              </h3>
+            </Link>
             <div className="flex items-center gap-2">
               <Tooltip>
                 <TooltipTrigger>
                   <Link
                     className="text-secondary hover:text-primary flex size-6 items-center justify-center transition-colors"
-                    href={project.link}
+                    href={project.live}
                     target="_blank"
                   >
                     <Website />

@@ -67,9 +67,9 @@ function BlogPageLoading() {
   );
 }
 
-export default function BlogPage() {
-  const allPosts = getPublishedBlogPosts();
-  const allTags = getAllTags();
+export default async function BlogPage() {
+  const allPosts = await getPublishedBlogPosts();
+  const allTags = await getAllTags();
 
   return (
     <Suspense fallback={<BlogPageLoading />}>

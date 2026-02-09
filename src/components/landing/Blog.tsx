@@ -7,8 +7,8 @@ import Container from '../common/Container';
 import SectionHeading from '../common/SectionHeading';
 import { Button } from '../ui/button';
 
-export default function Blog() {
-  const posts = getPublishedBlogPosts();
+export default async function Blog() {
+  const posts = await getPublishedBlogPosts();
 
   return (
     <Container className="mt-20">

@@ -40,7 +40,7 @@ export const experiences: Experience[] = [
     company: 'Zignuts Technolab',
     position: 'Full Stack Developer',
     location: 'Gandhinagar',
-    image: '/company/promote.png',
+    image: '/company/zignuts.png',
     description: [
       'Contributed to production-level web apps using Next.js, TypeScript, Node.js, and PostgreSQL. ',
       'Designed and implemented REST APIs with proper error handling and validation.',

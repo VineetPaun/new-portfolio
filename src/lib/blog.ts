@@ -1,150 +1,128 @@
-import { BlogFrontmatter, BlogPost, BlogPostPreview } from '@/types/blog';
-import fs from 'fs';
-import matter from 'gray-matter';
-import path from 'path';
+import { BlogPostPreview } from '@/types/blog';
 
-const blogDirectory = path.join(process.cwd(), 'src/data/blog');
+const HASHNODE_API = 'https://gql.hashnode.com';
+const HASHNODE_HOST = 'generativeaiblogs.hashnode.dev';
 
-/**
- * Get all blog post files from the blog directory
- */
-export function getBlogPostSlugs(): string[] {
-  if (!fs.existsSync(blogDirectory)) {
-    return [];
-  }
+/** Default placeholder image when a Hashnode post has no cover image */
+const DEFAULT_COVER_IMAGE = '/blog/default-cover.png';
 
-  const files = fs.readdirSync(blogDirectory);
-  return files
-    .filter((file) => file.endsWith('.mdx'))
-    .map((file) => file.replace(/\.mdx$/, ''));
+interface HashnodeTag {
+  name: string;
+  slug: string;
 }
 
-/**
- * Get blog post by slug with full content
- */
-export function getBlogPostBySlug(slug: string): BlogPost | null {
-  try {
-    const fullPath = path.join(blogDirectory, `${slug}.mdx`);
-
-    if (!fs.existsSync(fullPath)) {
-      return null;
-    }
-
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } = matter(fileContents);
-
-    // Validate frontmatter
-    const frontmatter = data as BlogFrontmatter;
-    if (!frontmatter.title || !frontmatter.description) {
-      throw new Error(`Invalid frontmatter in ${slug}.mdx`);
-    }
-
-    return {
-      slug,
-      frontmatter,
-      content,
-    };
-  } catch (error) {
-    console.error(`Error reading blog post ${slug}:`, error);
-    return null;
-  }
+interface HashnodePost {
+  id: string;
+  title: string;
+  brief: string;
+  slug: string;
+  coverImage: { url: string } | null;
+  publishedAt: string;
+  tags: HashnodeTag[];
+  url: string;
 }
 
-/**
- * Get all blog posts with frontmatter only (for listing page)
- */
-export function getAllBlogPosts(): BlogPostPreview[] {
-  const slugs = getBlogPostSlugs();
-
-  const posts = slugs
-    .map((slug) => {
-      const post = getBlogPostBySlug(slug);
-      if (!post) return null;
-
-      return {
-        slug: post.slug,
-        frontmatter: post.frontmatter,
+interface HashnodeResponse {
+  data: {
+    publication: {
+      posts: {
+        edges: { node: HashnodePost }[];
       };
-    })
-    .filter((post): post is BlogPostPreview => post !== null)
-    .sort((a, b) => {
-      // Sort by date, newest first
-      return (
-        new Date(b.frontmatter.date).getTime() -
-        new Date(a.frontmatter.date).getTime()
-      );
+    } | null;
+  };
+}
+
+/**
+ * Fetch posts from Hashnode GraphQL API
+ */
+async function fetchHashnodePosts(first = 20): Promise<HashnodePost[]> {
+  try {
+    const response = await fetch(HASHNODE_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: `
+          query GetPosts($host: String!, $first: Int!) {
+            publication(host: $host) {
+              posts(first: $first) {
+                edges {
+                  node {
+                    id
+                    title
+                    brief
+                    slug
+                    coverImage { url }
+                    publishedAt
+                    tags { name slug }
+                    url
+                  }
+                }
+              }
+            }
+          }
+        `,
+        variables: { host: HASHNODE_HOST, first },
+      }),
+      next: { revalidate: 3600 }, // Revalidate every hour
     });
 
-  return posts;
+    if (!response.ok) {
+      console.error('Hashnode API error:', response.statusText);
+      return [];
+    }
+
+    const json = (await response.json()) as HashnodeResponse;
+
+    if (!json.data.publication) {
+      console.error('Hashnode publication not found for host:', HASHNODE_HOST);
+      return [];
+    }
+
+    return json.data.publication.posts.edges.map((edge) => edge.node);
+  } catch (error) {
+    console.error('Failed to fetch from Hashnode:', error);
+    return [];
+  }
 }
 
 /**
- * Get all published blog posts
+ * Transform a Hashnode post into a BlogPostPreview
  */
-export function getPublishedBlogPosts(): BlogPostPreview[] {
-  const allPosts = getAllBlogPosts();
-  return allPosts.filter((post) => post.frontmatter.isPublished);
+function transformPost(post: HashnodePost): BlogPostPreview {
+  return {
+    slug: post.slug,
+    url: post.url,
+    frontmatter: {
+      title: post.title,
+      description: post.brief,
+      image: post.coverImage?.url || DEFAULT_COVER_IMAGE,
+      tags: post.tags.map((tag) => tag.name),
+      date: post.publishedAt,
+      isPublished: true,
+    },
+  };
 }
 
 /**
- * Get blog posts by tag
+ * Get all published blog posts from Hashnode (sorted newest first)
  */
-export function getBlogPostsByTag(tag: string): BlogPostPreview[] {
-  const publishedPosts = getPublishedBlogPosts();
-  return publishedPosts.filter((post) =>
-    post.frontmatter.tags.some(
-      (postTag) => postTag.toLowerCase() === tag.toLowerCase(),
-    ),
-  );
+export async function getPublishedBlogPosts(): Promise<BlogPostPreview[]> {
+  const posts = await fetchHashnodePosts();
+  return posts.map(transformPost);
 }
 
 /**
  * Get all unique tags from published posts
  */
-export function getAllTags(): string[] {
-  const publishedPosts = getPublishedBlogPosts();
+export async function getAllTags(): Promise<string[]> {
+  const posts = await getPublishedBlogPosts();
   const tagsSet = new Set<string>();
 
-  publishedPosts.forEach((post) => {
+  posts.forEach((post) => {
     post.frontmatter.tags.forEach((tag) => {
       tagsSet.add(tag.toLowerCase());
     });
   });
 
   return Array.from(tagsSet).sort();
-}
-
-/**
- * Get related posts based on tags (excluding the current post)
- */
-export async function getRelatedPosts(
-  currentSlug: string,
-  maxPosts = 3,
-): Promise<BlogPostPreview[]> {
-  const currentPost = await getBlogPostBySlug(currentSlug);
-  if (!currentPost || !currentPost.frontmatter.isPublished) {
-    return [];
-  }
-
-  const allPosts = getPublishedBlogPosts();
-  const currentTags = currentPost.frontmatter.tags.map((tag) =>
-    tag.toLowerCase(),
-  );
-
-  // Calculate relevance score based on shared tags
-  const postsWithScore = allPosts
-    .filter((post) => post.slug !== currentSlug)
-    .map((post) => {
-      const sharedTags = post.frontmatter.tags.filter((tag) =>
-        currentTags.includes(tag.toLowerCase()),
-      );
-      return {
-        post,
-        score: sharedTags.length,
-      };
-    })
-    .filter((item) => item.score > 0)
-    .sort((a, b) => b.score - a.score);
-
-  return postsWithScore.slice(0, maxPosts).map((item) => item.post);
 }

@@ -6,7 +6,7 @@ import {
   CardHeader,
 } from '@/components/ui/card';
 import { BlogPostPreview } from '@/types/blog';
-import { Link } from 'next-view-transitions';
+import { ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 
 import ArrowRight from '../svgs/ArrowRight';
@@ -17,7 +17,7 @@ interface BlogCardProps {
 }
 
 export function BlogCard({ post }: BlogCardProps) {
-  const { slug, frontmatter } = post;
+  const { frontmatter, url } = post;
   const { title, description, image, tags, date } = frontmatter;
 
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
@@ -26,22 +26,30 @@ export function BlogCard({ post }: BlogCardProps) {
     day: 'numeric',
   });
 
+  const hasImage = image && !image.includes('default-cover');
+
   return (
     <Card className="group h-full w-full overflow-hidden border-gray-100 p-0 shadow-none transition-all dark:border-gray-800">
       <CardHeader className="p-0">
         <div className="relative aspect-video overflow-hidden">
-          <Link href={`/blog/${slug}`}>
-            <Image src={image} alt={title} fill className="object-cover" />
-          </Link>
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            {hasImage ? (
+              <Image src={image} alt={title} fill className="object-cover" />
+            ) : (
+              <div className="bg-muted flex h-full w-full items-center justify-center">
+                <span className="text-muted-foreground text-sm">{title}</span>
+              </div>
+            )}
+          </a>
         </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
-          <Link href={`/blog/${slug}`}>
+          <a href={url} target="_blank" rel="noopener noreferrer">
             <h3 className="group-hover:text-primary line-clamp-2 text-xl leading-tight font-semibold">
               {title}
             </h3>
-          </Link>
+          </a>
           <p className="text-secondary mt-4 line-clamp-3">{description}</p>
         </div>
       </CardContent>
@@ -66,12 +74,15 @@ export function BlogCard({ post }: BlogCardProps) {
             >
               <Calender className="size-4" /> {formattedDate}
             </time>
-            <Link
-              href={`/blog/${slug}`}
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-secondary flex items-center justify-end gap-2 underline-offset-4 hover:underline"
             >
-              Read More <ArrowRight className="size-4" />
-            </Link>
+              Read More <ExternalLink className="size-3.5" />
+              <ArrowRight className="size-4" />
+            </a>
           </div>
         </div>
       </CardFooter>

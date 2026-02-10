@@ -1,25 +1,7 @@
 import Container from '@/components/common/Container';
 import { ProjectList } from '@/components/projects/ProjectList';
 import { Separator } from '@/components/ui/separator';
-import { generateMetadata as getMetadata } from '@/config/Meta';
 import { projects } from '@/config/Projects';
-import { Metadata } from 'next';
-import { Robots } from 'next/dist/lib/metadata/types/metadata-types';
-
-export const metadata: Metadata = {
-  ...getMetadata('/projects'),
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  } as Robots,
-};
 
 export default function ProjectsPage() {
   return (

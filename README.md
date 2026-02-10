@@ -21,7 +21,6 @@ Click here to your portfolio template now:
 - **Contact Form** with Telegram integration
 - **SEO** optimized
 - **TypeScript** for type safety
-- **Umami Analytics** for privacy-focused web analytics
 
 ## Prerequisites
 
@@ -40,41 +39,7 @@ TELEGRAM_CHAT_ID="your-chat-id"
 GEMINI_API_KEY="your-api-key"
 NODE_ENV="development"
 NEXT_PUBLIC_URL="http://localhost:3000"
-NEXT_PUBLIC_UMAMI_SRC="your-umami-script-url"
-NEXT_PUBLIC_UMAMI_ID="your-umami-website-id"
 ```
-
-### Setting up Telegram Integration
-
-1. Create a new bot with [@BotFather](https://t.me/botfather) on Telegram
-2. Copy the bot token and add it to your `.env` file as `TELEGRAM_BOT_TOKEN`
-3. Start a chat with your bot and send any message (e.g., "hello")
-4. Get your chat ID:
-
-   ```bash
-   # Run the test script to get your chat ID
-   bun run test-telegram
-   ```
-
-   - The script will show your Chat ID from the message you sent
-   - Copy the Chat ID and add it to your `.env` file as `TELEGRAM_CHAT_ID`
-   - Run the script again to verify everything works
-
-### Setting up Umami Analytics
-
-1. Visit Umami:
-   - Self-host Umami or use [Umami Cloud](https://cloud.umami.is)
-   - Follow Umami's [installation guide](https://umami.is/docs/install)
-
-2. Get your credentials:
-   - Copy your Umami script URL (ends with `/script.js`)
-   - Get your website ID from Umami dashboard
-
-3. Configure environment variables:
-   ```env
-   NEXT_PUBLIC_UMAMI_SRC="https://[your-umami-instance]/script.js"
-   NEXT_PUBLIC_UMAMI_ID="your-website-id"
-   ```
 
 ## Getting Started
 
@@ -114,7 +79,6 @@ The project uses configuration files in the `src/config` directory for easy cust
 - `About.tsx` - About section content
 - `Contact.tsx` - Contact form settings
 - `Experience.tsx` - Work experience details
-- `Footer.tsx` - Footer links and content
 - `Gears.tsx` - Setup/gear section
 - `Hero.tsx` - Hero section content
 - `Meta.tsx` - SEO and metadata
@@ -155,4 +119,3 @@ export const NewTechIcon = () => {
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

@@ -1,6 +1,4 @@
-import UmamiAnalytics from '@/components/analytics/UmamiAnalytics';
 import ChatBubble from '@/components/common/ChatBubble';
-import Footer from '@/components/common/Footer';
 import Navbar from '@/components/common/Navbar';
 import { Quote } from '@/components/common/Quote';
 import { ThemeProvider } from '@/components/common/ThemeProviders';
@@ -31,9 +29,7 @@ export default function RootLayout({
               <Navbar />
               {children}
               <Quote />
-              <Footer />
               <ChatBubble />
-              <UmamiAnalytics />
             </ReactLenis>
           </ThemeProvider>
         </body>

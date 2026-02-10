@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
 import * as z from 'zod';
 
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -14,7 +15,6 @@ const contactSchema = z.object({
 });
 
 function getClientIP(request: NextRequest): string {
-  // Get IP from various headers in order of preference
   const forwarded = request.headers.get('x-forwarded-for');
   const realIP = request.headers.get('x-real-ip');
   const cfConnectingIP = request.headers.get('cf-connecting-ip');
@@ -40,7 +40,6 @@ function checkRateLimit(clientIP: string): {
   const clientData = rateLimitStore.get(clientIP);
 
   if (!clientData || now > clientData.resetTime) {
-    // First request or window expired
     rateLimitStore.set(clientIP, {
       count: 1,
       resetTime: now + RATE_LIMIT_WINDOW,
@@ -52,7 +51,6 @@ function checkRateLimit(clientIP: string): {
     return { allowed: false, remaining: 0 };
   }
 
-  // Increment count
   clientData.count++;
   rateLimitStore.set(clientIP, clientData);
 
@@ -62,63 +60,55 @@ function checkRateLimit(clientIP: string): {
   };
 }
 
-async function sendToTelegram(data: {
+async function sendEmail(data: {
   name: string;
   email: string;
   phone: string;
   message: string;
 }): Promise<boolean> {
-  const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
-  const telegramChatId = process.env.TELEGRAM_CHAT_ID;
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const recipientEmail = process.env.CONTACT_EMAIL;
 
-  if (!telegramToken) {
-    console.error('TELEGRAM_BOT_TOKEN not configured');
+  if (!resendApiKey) {
+    console.error('RESEND_API_KEY not configured');
     return false;
   }
 
-  if (!telegramChatId) {
-    console.error('TELEGRAM_CHAT_ID not configured');
+  if (!recipientEmail) {
+    console.error('CONTACT_EMAIL not configured');
     return false;
   }
 
-  const message = `
-🔔 *New Contact Form Submission*
-
-👤 *Name:* ${data.name.trim()}
-📧 *Email:* ${data.email.trim()}
-📱 *Phone:* ${data.phone.trim()}
-
-💬 *Message:*
-${data.message.trim()}
-
-⏰ *Submitted:* ${new Date().toISOString()}
-📍 *Timezone:* ${Intl.DateTimeFormat().resolvedOptions().timeZone}
-  `.trim();
+  const resend = new Resend(resendApiKey);
 
   try {
-    const telegramUrl = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
-
-    const response = await fetch(telegramUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: telegramChatId,
-        text: message,
-        parse_mode: 'Markdown',
-      }),
+    const { error } = await resend.emails.send({
+      from: 'Portfolio Contact <onboarding@resend.dev>',
+      to: recipientEmail,
+      subject: `New Contact Form Submission from ${data.name.trim()}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <hr />
+        <p><strong>Name:</strong> ${data.name.trim()}</p>
+        <p><strong>Email:</strong> <a href="mailto:${data.email.trim()}">${data.email.trim()}</a></p>
+        <p><strong>Phone:</strong> ${data.phone.trim()}</p>
+        <hr />
+        <h3>Message:</h3>
+        <p>${data.message.trim().replace(/\n/g, '<br />')}</p>
+        <hr />
+        <p><small>Submitted at ${new Date().toISOString()}</small></p>
+      `,
+      replyTo: data.email.trim(),
     });
 
-    if (response.ok) {
-      return true;
-    } else {
-      const errorText = await response.text();
-      console.error('Failed to send to Telegram:', errorText);
+    if (error) {
+      console.error('Failed to send email:', error);
       return false;
     }
+
+    return true;
   } catch (error) {
-    console.error('Error sending to Telegram:', error);
+    console.error('Error sending email:', error);
     return false;
   }
 }
@@ -148,9 +138,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const validatedData = contactSchema.parse(body);
 
-    const telegramSent = await sendToTelegram(validatedData);
+    const emailSent = await sendEmail(validatedData);
 
-    if (!telegramSent) {
+    if (!emailSent) {
       return NextResponse.json(
         { error: 'Failed to send message. Please try again.' },
         { status: 500 },

@@ -2,13 +2,10 @@ import ChatBubble from '@/components/common/ChatBubble';
 import Navbar from '@/components/common/Navbar';
 import { Quote } from '@/components/common/Quote';
 import { ThemeProvider } from '@/components/common/ThemeProviders';
-import { generateMetadata as getMetadata } from '@/config/Meta';
 import ReactLenis from 'lenis/react';
 import { ViewTransitions } from 'next-view-transitions';
 
 import './globals.css';
-
-export const metadata = getMetadata('/');
 
 export default function RootLayout({
   children,

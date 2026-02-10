@@ -2,23 +2,7 @@ import Container from '@/components/common/Container';
 import ContactForm from '@/components/contact/ContactForm';
 import { Separator } from '@/components/ui/separator';
 import { contactConfig } from '@/config/Contact';
-import { generateMetadata as getMetadata } from '@/config/Meta';
 import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  ...getMetadata('/contact'),
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-};
 
 export default function ContactPage() {
   return (

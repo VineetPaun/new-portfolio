@@ -1,6 +1,6 @@
 # Sleek Portfolio by vineet paun
 
-A modern, responsive portfolio website built with Next.js 15, TypeScript, Tailwind CSS, and Shadcn UI. Features a blog system, project showcase, work experience timeline, and contact form with Telegram integration.
+A modern, responsive portfolio website built with Next.js 15, TypeScript, Tailwind CSS, and Shadcn UI. Features a blog system, project showcase and work experience timeline
 
 <!-- ![Portfolio Preview](/public/meta/hero.png) -->
 
@@ -12,14 +12,11 @@ Click here to your portfolio template now:
 
 ## Features
 
-- **Next.js 15** with App Router
+- **Next.js 16** with App Router
 - **Tailwind CSS** for styling
 - **Shadcn UI** components
 - **Dark/Light** mode
 - **Responsive** design
-- **MDX** for blog posts and project details
-- **Contact Form** with Telegram integration
-- **SEO** optimized
 - **TypeScript** for type safety
 
 ## Prerequisites
@@ -34,8 +31,6 @@ Before you begin, ensure you have the following installed:
 Create a `.env` file in the root directory with the following variables:
 
 ```env
-TELEGRAM_BOT_TOKEN="your-token"
-TELEGRAM_CHAT_ID="your-chat-id"
 GEMINI_API_KEY="your-api-key"
 NODE_ENV="development"
 NEXT_PUBLIC_URL="http://localhost:3000"

@@ -28,7 +28,7 @@ export const seoConfig = {
   xHandle: 'Vineet_Paun',
 
   // Fill these when available
-  organizationName: '',
+  organizationName: 'Vineet Paun',
   organizationLogoPath: '',
   contactEmail: 'vineetpaun@gmail.com',
   phone: '',

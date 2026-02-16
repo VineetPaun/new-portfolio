@@ -4,7 +4,7 @@ import { githubConfig } from '@/config/Github';
 import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Container from '../common/Container';
 import GithubIcon from '../svgs/Github';
@@ -46,17 +46,49 @@ function filterLastYear(contributions: ContributionItem[]): ContributionItem[] {
 export default function Github() {
   const [contributions, setContributions] = useState<ContributionItem[]>([]);
   const [totalContributions, setTotalContributions] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
   const { theme } = useTheme();
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (!entry?.isIntersecting) return;
+        setShouldLoad(true);
+        observer.disconnect();
+      },
+      { rootMargin: '200px 0px' },
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!shouldLoad) return;
+
     async function fetchData() {
+      let timeout: ReturnType<typeof setTimeout> | undefined;
+
       try {
         setIsLoading(true);
+        setHasError(false);
+
+        const controller = new AbortController();
+        timeout = setTimeout(() => controller.abort(), 8000);
+
         const response = await fetch(
           `${githubConfig.apiUrl}/${githubConfig.username}.json`,
+          { signal: controller.signal },
         );
+        clearTimeout(timeout);
         const data: { contributions?: unknown[] } = await response.json();
 
         if (data?.contributions && Array.isArray(data.contributions)) {
@@ -111,15 +143,18 @@ export default function Github() {
         console.error('Failed to fetch GitHub contributions:', err);
         setHasError(true);
       } finally {
+        if (timeout) {
+          clearTimeout(timeout);
+        }
         setIsLoading(false);
       }
     }
 
     fetchData();
-  }, []);
+  }, [shouldLoad]);
 
   return (
-    <Container className="mt-20">
+    <Container ref={sectionRef} className="mt-20">
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -143,7 +178,16 @@ export default function Github() {
         </div>
 
         {/* Content */}
-        {isLoading ? (
+        {!shouldLoad ? (
+          <div className="text-muted-foreground border-border rounded-xl border-2 border-dashed p-8 text-center">
+            <p className="mb-3 text-sm">
+              Load contribution graph when this section is near viewport.
+            </p>
+            <Button variant="outline" onClick={() => setShouldLoad(true)}>
+              Load GitHub Activity
+            </Button>
+          </div>
+        ) : isLoading ? (
           <div className="flex items-center justify-center py-16">
             <div className="text-center">
               <div className="border-primary mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-2 border-t-transparent"></div>
@@ -183,8 +227,8 @@ export default function Github() {
                   colorScheme={theme === 'dark' ? 'dark' : 'light'}
                   maxLevel={githubConfig.maxLevel}
                   showTotalCount={false}
-                  showColorLegend={true}
-                  showMonthLabels={true}
+                  showColorLegend={false}
+                  showMonthLabels={false}
                   theme={githubConfig.theme}
                   labels={{
                     months: githubConfig.months,

@@ -13,10 +13,11 @@ export default function About() {
       {/* About me */}
       <div className="mt-8 flex flex-col gap-4 md:flex-row">
         <Image
-          src="/assets/logo.png"
+          src="/assets/logo.webp"
           alt="About"
           width={100}
           height={100}
+          sizes="(max-width: 768px) 240px, 240px"
           className="border-secondary size-60 rounded-md border-2 bg-blue-300 dark:bg-yellow-300"
         />
         <div className="mt-4">

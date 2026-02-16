@@ -29,13 +29,10 @@ export const useThemeToggle = ({
 
   const styleId = 'theme-transition-styles';
 
-  const updateStyles = useCallback((css: string, name: string) => {
+  const updateStyles = useCallback((css: string) => {
     if (typeof window === 'undefined') return;
 
     let styleElement = document.getElementById(styleId) as HTMLStyleElement;
-
-    console.log('style ELement', styleElement);
-    console.log('name', name);
 
     if (!styleElement) {
       styleElement = document.createElement('style');
@@ -44,8 +41,6 @@ export const useThemeToggle = ({
     }
 
     styleElement.textContent = css;
-
-    console.log('content updated');
   }, []);
 
   const toggleTheme = useCallback(() => {
@@ -53,7 +48,7 @@ export const useThemeToggle = ({
 
     const animation = createAnimation(variant, start, blur, gifUrl);
 
-    updateStyles(animation.css, animation.name);
+    updateStyles(animation.css);
 
     if (typeof window === 'undefined') return;
 
@@ -84,7 +79,7 @@ export const useThemeToggle = ({
 
     const animation = createAnimation(variant, start, blur, gifUrl);
 
-    updateStyles(animation.css, animation.name);
+    updateStyles(animation.css);
 
     if (typeof window === 'undefined') return;
 
@@ -105,7 +100,7 @@ export const useThemeToggle = ({
 
     const animation = createAnimation(variant, start, blur, gifUrl);
 
-    updateStyles(animation.css, animation.name);
+    updateStyles(animation.css);
 
     if (typeof window === 'undefined') return;
 

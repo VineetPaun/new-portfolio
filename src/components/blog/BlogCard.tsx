@@ -34,7 +34,13 @@ export function BlogCard({ post }: BlogCardProps) {
         <div className="relative aspect-video overflow-hidden">
           <a href={url} target="_blank" rel="noopener noreferrer">
             {hasImage ? (
-              <Image src={image} alt={title} fill className="object-cover" />
+              <Image
+                src={image}
+                alt={title}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+              />
             ) : (
               <div className="bg-muted flex h-full w-full items-center justify-center">
                 <span className="text-muted-foreground text-sm">{title}</span>

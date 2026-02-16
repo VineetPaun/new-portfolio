@@ -5,11 +5,13 @@
 @font-face {
   font-family: 'Hanken Grotesk';
   src: url('/fonts/HankenGrotesk-Variable.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Hanken Grotesk Italic';
   src: url('/fonts/HankenGrotesk-Italic-Variable.ttf') format('truetype');
+  font-display: swap;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -157,20 +159,26 @@
 /* Page fade-in animation with blur */
 @keyframes fadeInBlur {
   0% {
-    opacity: 0.2;
-    filter: blur(5px);
+    opacity: 0;
+    transform: translateY(8px);
   }
   100% {
     opacity: 1;
-    filter: blur(0px);
+    transform: translateY(0);
   }
 }
 
 .animate-fade-in-blur {
-  animation: fadeInBlur 0.5s ease-out forwards;
-  animation-delay: 0.3s;
-  opacity: 0.4;
-  filter: blur(3px);
+  animation: fadeInBlur 0.35s ease-out both;
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-blur {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Removed global View Transition API overrides to allow Skiper toggle styles to apply */

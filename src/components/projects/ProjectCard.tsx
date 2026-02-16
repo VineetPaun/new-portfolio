@@ -30,6 +30,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               alt={project.title}
               width={1920}
               height={1080}
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </Link>
         </div>

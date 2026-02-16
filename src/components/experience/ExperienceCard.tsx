@@ -5,7 +5,6 @@ import Image from 'next/image';
 import React from 'react';
 
 import Skill from '../common/Skill';
-import Github from '../svgs/Github';
 import LinkedIn from '../svgs/LinkedIn';
 import Website from '../svgs/Website';
 import X from '../svgs/X';
@@ -31,6 +30,7 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
             alt={experience.company}
             width={100}
             height={100}
+            sizes="48px"
             className="size-12 rounded-md"
           />
           <div className="flex flex-col">

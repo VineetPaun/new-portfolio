@@ -56,6 +56,8 @@ export default function Hero() {
         alt="Vineet Paun profile photo"
         width={100}
         height={100}
+        sizes="96px"
+        priority
         className="size-24 rounded-full bg-blue-300 dark:bg-yellow-300"
       />
 

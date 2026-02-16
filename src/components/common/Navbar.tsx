@@ -18,6 +18,8 @@ export default function Navbar() {
               alt={navbarConfig.logo.alt}
               width={navbarConfig.logo.width}
               height={navbarConfig.logo.height}
+              sizes="48px"
+              priority
             />
           </Link>
           <div className="flex items-center justify-center gap-4">

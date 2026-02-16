@@ -1,19 +1,18 @@
 import React from 'react';
 
-export default function Container({
-  children,
-  className,
-  ...props
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+const Container = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(function Container({ children, className, ...props }, ref) {
   return (
     <div
-      className={`animate-fade-in-blur container mx-auto max-w-3xl px-4 ${className}`}
+      ref={ref}
+      className={`animate-fade-in-blur container mx-auto max-w-3xl px-4 ${className || ''}`}
       {...props}
     >
       {children}
     </div>
   );
-}
+});
+
+export default Container;

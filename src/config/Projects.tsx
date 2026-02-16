@@ -14,7 +14,7 @@ export const projects: Project[] = [
     title: 'Docsy',
     description:
       'Docsy is a RAG-powered AI app that lets you chat with your own documents. Upload PDFs or text files and get accurate, source-grounded answers using semantic search and large language models.',
-    image: '/project/docsy.png',
+    image: '/project/docsy.webp',
     technologies: [
       { name: 'Next.js', icon: <NextJs key="nextjs" /> },
       { name: 'TypeScript', icon: <TypeScript key="typescript" /> },
@@ -35,7 +35,7 @@ export const projects: Project[] = [
     title: 'BlinkBuy',
     description:
       'BlinkBuy is an AI-powered quick commerce web app that converts natural language user prompts into structured cart actions (add, remove, update), enabling intent-driven shopping instead of manual browsing.',
-    image: '/project/blinkbuy.png',
+    image: '/project/blinkbuy.webp',
     technologies: [
       { name: 'Next.js', icon: <NextJs key="nextjs" /> },
       { name: 'TypeScript', icon: <TypeScript key="typescript" /> },
@@ -54,7 +54,7 @@ export const projects: Project[] = [
     title: 'PersonaChat',
     description:
       'PersonaChat is an interactive AI chat platform where you can talk to predefined personas or create your own with custom tone, style, and personality',
-    image: '/project/personachat.png',
+    image: '/project/personachat.webp',
     technologies: [
       { name: 'Next.js', icon: <NextJs key="nextjs" /> },
       { name: 'TypeScript', icon: <TypeScript key="typescript" /> },
@@ -73,7 +73,7 @@ export const projects: Project[] = [
     title: 'JobKyuNahiLagRahi',
     description:
       'JobKyuNahiLagRahi is an resume & job application AI reviewer with PDF parsing, OAuth authentication, and chat interface ',
-    image: '/project/jobkyunahilagrahi.png',
+    image: '/project/jobkyunahilagrahi.webp',
     technologies: [
       { name: 'Next.js', icon: <NextJs key="nextjs" /> },
       { name: 'TypeScript', icon: <TypeScript key="typescript" /> },

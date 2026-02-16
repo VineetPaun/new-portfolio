@@ -1,4 +1,4 @@
-import ChatBubble from '@/components/common/ChatBubble';
+import LazyChatBubble from '@/components/common/LazyChatBubble';
 import Navbar from '@/components/common/Navbar';
 import { Quote } from '@/components/common/Quote';
 import { ThemeProvider } from '@/components/common/ThemeProviders';
@@ -46,7 +46,7 @@ export default function RootLayout({
               <Navbar />
               <main>{children}</main>
               <Quote />
-              <ChatBubble />
+              <LazyChatBubble />
             </ReactLenis>
           </ThemeProvider>
         </body>

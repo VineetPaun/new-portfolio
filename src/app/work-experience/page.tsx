@@ -2,10 +2,37 @@ import Container from '@/components/common/Container';
 import { ExperienceList } from '@/components/experience/ExperienceList';
 import { Separator } from '@/components/ui/separator';
 import { experiences } from '@/config/Experience';
+import {
+  buildJsonLd,
+  createPageMetadata,
+  getBreadcrumbSchema,
+} from '@/lib/seo';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = createPageMetadata({
+  title: 'Work Experience',
+  description:
+    'Review the work experience of Vineet Paun across full stack and AI-focused engineering roles.',
+  path: '/work-experience',
+  keywords: ['developer experience', 'software engineer resume', 'career'],
+});
 
 export default function WorkExperiencePage() {
+  const breadcrumbSchema = buildJsonLd(
+    getBreadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Work Experience', path: '/work-experience' },
+    ]),
+  );
+
   return (
     <Container className="py-16">
+      {breadcrumbSchema ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: breadcrumbSchema }}
+        />
+      ) : null}
       <div className="space-y-8">
         {/* Header */}
         <div className="space-y-4 text-center">

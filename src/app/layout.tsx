@@ -2,10 +2,30 @@ import ChatBubble from '@/components/common/ChatBubble';
 import Navbar from '@/components/common/Navbar';
 import { Quote } from '@/components/common/Quote';
 import { ThemeProvider } from '@/components/common/ThemeProviders';
+import { createPageMetadata, defaultViewport } from '@/lib/seo';
 import ReactLenis from 'lenis/react';
+import { Metadata } from 'next';
 import { ViewTransitions } from 'next-view-transitions';
 
 import './globals.css';
+
+export const metadata: Metadata = {
+  ...createPageMetadata({
+    title: 'Home',
+    description:
+      'Explore the portfolio of Vineet Paun, featuring full stack AI projects, technical blogs, work experience, and contact details.',
+    path: '/',
+    keywords: ['software engineer', 'AI projects', 'developer portfolio'],
+    type: 'profile',
+  }),
+  manifest: '/manifest.webmanifest',
+  icons: {
+    icon: [{ url: '/favicon.ico' }],
+    apple: [{ url: '/favicon.ico' }],
+  },
+};
+
+export const viewport = defaultViewport;
 
 export default function RootLayout({
   children,
@@ -24,7 +44,7 @@ export default function RootLayout({
           >
             <ReactLenis root>
               <Navbar />
-              {children}
+              <main>{children}</main>
               <Quote />
               <ChatBubble />
             </ReactLenis>

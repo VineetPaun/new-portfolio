@@ -1,12 +1,24 @@
 import Container from '@/components/common/Container';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
+import {
+  buildJsonLd,
+  createPageMetadata,
+  getBreadcrumbSchema,
+} from '@/lib/seo';
 import { getAllTags, getPublishedBlogPosts } from '@/lib/blog';
 import { Metadata } from 'next';
-import { Robots } from 'next/dist/lib/metadata/types/metadata-types';
 import { Suspense } from 'react';
 
 import { BlogPageClient } from './BlogPageClient';
+
+export const metadata: Metadata = createPageMetadata({
+  title: 'Blogs',
+  description:
+    'Read engineering blogs by Vineet Paun on AI, full stack development, and practical software architecture.',
+  path: '/blog',
+  keywords: ['engineering blog', 'AI blog', 'Next.js tutorials', 'TypeScript'],
+});
 
 function BlogPageLoading() {
   return (
@@ -51,9 +63,21 @@ function BlogPageLoading() {
 export default async function BlogPage() {
   const allPosts = await getPublishedBlogPosts();
   const allTags = await getAllTags();
+  const breadcrumbSchema = buildJsonLd(
+    getBreadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Blogs', path: '/blog' },
+    ]),
+  );
 
   return (
     <Suspense fallback={<BlogPageLoading />}>
+      {breadcrumbSchema ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: breadcrumbSchema }}
+        />
+      ) : null}
       <BlogPageClient initialPosts={allPosts} initialTags={allTags} />
     </Suspense>
   );

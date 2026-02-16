@@ -53,7 +53,7 @@ export default function Hero() {
       {/* Image */}
       <Image
         src={avatar}
-        alt="hero"
+        alt="Vineet Paun profile photo"
         width={100}
         height={100}
         className="size-24 rounded-full bg-blue-300 dark:bg-yellow-300"

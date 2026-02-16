@@ -102,15 +102,13 @@ export const NewTechIcon = () => {
 
 ### Blog Posts
 
-1. Create a new MDX file in `src/data/blog/`
-2. Add metadata and content following existing post structure
-3. Add blog thumbnail in `public/blog/`
+1. Blog posts are fetched from Hashnode (`src/lib/blog.ts`)
+2. Publish articles on your connected Hashnode publication
+3. Update `HASHNODE_HOST` in `src/lib/blog.ts` if needed
 
 ### Projects
 
-1. Create a new MDX file in `src/data/projects/`
-2. Add metadata and content following existing project structure
-3. Add project thumbnail in `public/project/`
+1. Add/update project entries in `src/config/Projects.tsx`
+2. Add project thumbnails in `public/project/`
 
 ## License
-

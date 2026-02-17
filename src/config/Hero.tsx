@@ -108,8 +108,8 @@ export const socialLinks = [
     icon: <Mail />,
   },
   {
-    name: "Hashnode",
-    href: "https://hashnode.com/@vineetpaun",
+    name: "Blog",
+    href: "/blog",
     icon: <Hashnode />,
   },
 ];

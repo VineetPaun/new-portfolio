@@ -128,7 +128,7 @@ export default function SpotifyCard() {
           <Link
             href={track.songUrl}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer nofollow"
             aria-label={`Play ${track.title} on Spotify`}
             className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-foreground/70 transition hover:text-foreground dark:text-white/70 dark:hover:text-white"
           >

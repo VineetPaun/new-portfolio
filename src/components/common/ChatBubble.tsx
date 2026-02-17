@@ -296,7 +296,7 @@ const ChatBubble: React.FC = () => {
                                 <a
                                   {...props}
                                   target="_blank"
-                                  rel="noopener noreferrer"
+                                  rel="noopener noreferrer nofollow ugc"
                                   className="break-words text-blue-500 underline hover:text-blue-700"
                                 />
                               ),

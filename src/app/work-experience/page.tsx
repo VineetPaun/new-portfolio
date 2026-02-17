@@ -10,7 +10,7 @@ import {
 import { Metadata } from 'next';
 
 export const metadata: Metadata = createPageMetadata({
-  title: 'Work Experience',
+  title: 'Full Stack Engineering Work Experience and Career Timeline',
   description:
     'Review the work experience of Vineet Paun across full stack and AI-focused engineering roles.',
   path: '/work-experience',

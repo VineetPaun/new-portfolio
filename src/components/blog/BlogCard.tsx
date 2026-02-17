@@ -32,30 +32,26 @@ export function BlogCard({ post }: BlogCardProps) {
     <Card className="group h-full w-full overflow-hidden border-gray-100 p-0 shadow-none transition-all dark:border-gray-800">
       <CardHeader className="p-0">
         <div className="relative aspect-video overflow-hidden">
-          <a href={url} target="_blank" rel="noopener noreferrer">
-            {hasImage ? (
-              <Image
-                src={image}
-                alt={title}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover"
-              />
-            ) : (
-              <div className="bg-muted flex h-full w-full items-center justify-center">
-                <span className="text-muted-foreground text-sm">{title}</span>
-              </div>
-            )}
-          </a>
+          {hasImage ? (
+            <Image
+              src={image}
+              alt={title}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+            />
+          ) : (
+            <div className="bg-muted flex h-full w-full items-center justify-center">
+              <span className="text-muted-foreground text-sm">{title}</span>
+            </div>
+          )}
         </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
-          <a href={url} target="_blank" rel="noopener noreferrer">
-            <h3 className="group-hover:text-primary line-clamp-2 text-xl leading-tight font-semibold">
-              {title}
-            </h3>
-          </a>
+          <h3 className="group-hover:text-primary line-clamp-2 text-xl leading-tight font-semibold">
+            {title}
+          </h3>
           <p className="text-secondary mt-4 line-clamp-3">{description}</p>
         </div>
       </CardContent>
@@ -83,7 +79,7 @@ export function BlogCard({ post }: BlogCardProps) {
             <a
               href={url}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener noreferrer nofollow"
               className="text-secondary flex items-center justify-end gap-2 underline-offset-4 hover:underline"
             >
               Read More <ExternalLink className="size-3.5" />

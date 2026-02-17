@@ -1,0 +1,17 @@
+# Vineet Paun Portfolio
+
+## About
+Official portfolio website for Vineet Paun, a full stack AI developer.
+
+## Primary Pages
+- /projects
+- /work-experience
+- /blog
+- /resume
+- /contact
+
+## Sitemap
+/sitemap.xml
+
+## Contact
+mailto:vineetpaun@gmail.com

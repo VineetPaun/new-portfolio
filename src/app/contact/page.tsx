@@ -10,7 +10,7 @@ import {
 import { Metadata } from 'next';
 
 export const metadata: Metadata = createPageMetadata({
-  title: 'Contact',
+  title: 'Contact for Freelance and AI Product Development',
   description:
     'Get in touch with Vineet Paun for collaborations, freelance work, and full stack AI product development opportunities.',
   path: '/contact',

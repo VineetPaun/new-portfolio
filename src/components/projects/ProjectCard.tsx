@@ -23,16 +23,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
     <Card className="group h-full w-full overflow-hidden border-gray-100 p-0 shadow-none transition-all dark:border-gray-800">
       <CardHeader className="p-0">
         <div className="group relative aspect-video overflow-hidden">
-          <Link href={project.live} target="_blank" rel="noopener noreferrer">
-            <Image
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              src={project.image}
-              alt={project.title}
-              width={1920}
-              height={1080}
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </Link>
+          <Image
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            src={project.image}
+            alt={project.title}
+            width={1920}
+            height={1080}
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
         </div>
       </CardHeader>
 
@@ -40,11 +38,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="space-y-4">
           {/* Project Header - Title and Icons */}
           <div className="flex items-center justify-between gap-4">
-            <Link href={project.live} target="_blank" rel="noopener noreferrer">
-              <h3 className="group-hover:text-primary text-xl leading-tight font-semibold transition-colors hover:underline hover:underline-offset-4">
-                {project.title}
-              </h3>
-            </Link>
+            <h3 className="group-hover:text-primary text-xl leading-tight font-semibold transition-colors">
+              {project.title}
+            </h3>
             <div className="flex items-center gap-2">
               <Tooltip>
                 <TooltipTrigger>
@@ -52,6 +48,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     className="text-secondary hover:text-primary flex size-6 items-center justify-center transition-colors"
                     href={project.live}
                     target="_blank"
+                    rel="noopener noreferrer nofollow"
                   >
                     <Website />
                   </Link>
@@ -67,6 +64,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                       className="text-secondary hover:text-primary flex size-6 items-center justify-center transition-colors"
                       href={project.github}
                       target="_blank"
+                      rel="noopener noreferrer nofollow"
                     >
                       <Github />
                     </Link>

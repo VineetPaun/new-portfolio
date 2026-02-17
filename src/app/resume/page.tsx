@@ -9,7 +9,7 @@ import {
 import { Metadata } from 'next';
 
 export const metadata: Metadata = createPageMetadata({
-  title: 'Resume',
+  title: 'Software Engineer Resume and Technical Skills',
   description:
     'View the latest resume of Vineet Paun, including technical skills, project experience, and professional background.',
   path: '/resume',

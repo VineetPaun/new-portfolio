@@ -10,7 +10,7 @@ import {
 import { Metadata } from 'next';
 
 export const metadata: Metadata = createPageMetadata({
-  title: 'Projects',
+  title: 'AI and Full Stack Project Case Studies',
   description:
     'Browse full stack and AI-focused projects by Vineet Paun, including production-ready web applications and experiments.',
   path: '/projects',

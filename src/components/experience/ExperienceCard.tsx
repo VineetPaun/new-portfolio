@@ -48,6 +48,7 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
                     <Link
                       href={experience.website}
                       target="_blank"
+                      rel="noopener noreferrer nofollow"
                       className="size-4 text-neutral-500"
                     >
                       <Website />
@@ -62,6 +63,7 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
                     <Link
                       href={experience.x}
                       target="_blank"
+                      rel="noopener noreferrer nofollow"
                       className="size-4 text-neutral-500"
                     >
                       <X />
@@ -76,6 +78,7 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
                     <Link
                       href={experience.linkedin}
                       target="_blank"
+                      rel="noopener noreferrer nofollow"
                       className="size-4 text-neutral-500"
                     >
                       <LinkedIn />

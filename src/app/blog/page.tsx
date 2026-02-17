@@ -13,7 +13,7 @@ import { Suspense } from 'react';
 import { BlogPageClient } from './BlogPageClient';
 
 export const metadata: Metadata = createPageMetadata({
-  title: 'Blogs',
+  title: 'AI Engineering Blog and Full Stack Development Tutorials',
   description:
     'Read engineering blogs by Vineet Paun on AI, full stack development, and practical software architecture.',
   path: '/blog',

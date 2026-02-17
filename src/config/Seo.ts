@@ -1,13 +1,13 @@
 export const seoConfig = {
   // Core
   siteName: 'Vineet Paun',
-  siteUrl: process.env.NEXT_PUBLIC_URL?.trim() ?? '',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL,
   locale: 'en_US',
 
   // Defaults
-  defaultTitle: 'Vineet Paun | Full Stack AI-Ready Developer',
+  defaultTitle: 'Vineet Paun | Full Stack AI Developer Portfolio and Projects',
   defaultDescription:
-    'Portfolio of Vineet Paun, a full stack AI-ready developer building backend-driven web applications and AI-powered products.',
+    'Portfolio of Vineet Paun, a full stack AI developer building scalable web applications, AI products, and backend systems with Next.js and TypeScript.',
   defaultOgImagePath: '/opengraph-image',
   defaultOgImageAlt: 'Vineet Paun portfolio profile image',
   category: 'technology',

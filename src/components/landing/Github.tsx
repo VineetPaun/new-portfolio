@@ -208,6 +208,8 @@ export default function Github() {
             <Button variant="outline" asChild>
               <Link
                 href={`https://github.com/${githubConfig.username}`}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
                 className="inline-flex items-center gap-2"
               >
                 <GithubIcon className="h-4 w-4" />
@@ -234,9 +236,6 @@ export default function Github() {
                     months: githubConfig.months,
                     weekdays: githubConfig.weekdays,
                     totalCount: githubConfig.totalCountLabel,
-                  }}
-                  style={{
-                    color: 'rgb(139, 148, 158)',
                   }}
                 />
               </div>

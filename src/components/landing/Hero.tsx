@@ -95,22 +95,31 @@ export default function Hero() {
 
       {/* Social Links */}
       <div className="mt-8 flex gap-2">
-        {socialLinks.map((link) => (
-          <Tooltip key={link.name} delayDuration={0}>
-            <TooltipTrigger asChild>
-              <Link
-                href={link.href}
-                key={link.name}
-                className="text-secondary flex items-center gap-2"
-              >
-                <span className="size-6">{link.icon}</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{link.name}</p>
-            </TooltipContent>
-          </Tooltip>
-        ))}
+        {socialLinks.map((link) => {
+          const isExternal =
+            link.href.startsWith('http://') ||
+            link.href.startsWith('https://') ||
+            link.href.startsWith('mailto:');
+
+          return (
+            <Tooltip key={link.name} delayDuration={0}>
+              <TooltipTrigger asChild>
+                <Link
+                  href={link.href}
+                  key={link.name}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer nofollow' : undefined}
+                  className="text-secondary flex items-center gap-2"
+                >
+                  <span className="size-6">{link.icon}</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{link.name}</p>
+              </TooltipContent>
+            </Tooltip>
+          );
+        })}
       </div>
 
       {/* <SpotifyCard /> */}

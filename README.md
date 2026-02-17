@@ -33,6 +33,7 @@ Create a `.env` file in the root directory with the following variables:
 ```env
 GEMINI_API_KEY="your-api-key"
 NODE_ENV="development"
+NEXT_PUBLIC_SITE_URL="https://your-domain.com"
 NEXT_PUBLIC_URL="http://localhost:3000"
 ```
 
